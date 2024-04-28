@@ -1,13 +1,18 @@
 import React from 'react';
-import './App.css'; 
-import AuthForm from './Login/AuthForm';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import AdminPage from './pages/AdminPage';
+import './App.css';
 
-function App() {
+const App = () => {
   return (
-    <>
-      <AuthForm />
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/admin" element={<AdminPage />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
