@@ -7,15 +7,17 @@ body {
   align-items: center;
   min-height: 100vh;
   font-family: 'Jost', sans-serif;
-  background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+  background: #1488cc;
+  background: -webkit-linear-gradient(to right, #2b32b2, #1488cc);
+  background: linear-gradient(to right, #2b32b2, #1488cc);
 }
 
 /* Estilos específicos del componente AuthForm */
 .main {
   width: 350px;
-  height: 500px;
+  height: 350px;
   overflow: hidden;
-  background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/ cover;
+  background: #fff;
   border-radius: 10px;
   box-shadow: 5px 20px 50px #000;
 }
@@ -32,11 +34,11 @@ body {
 }
 
 label {
-  color: #fff;
-  font-size: 2.3em;
+  color:#ff5e62;
+  font-size: 2.5em;
   justify-content: center;
   display: flex;
-  margin: 60px;
+  margin: 40px;
   font-weight: bold;
   cursor: pointer;
   transition: .5s ease-in-out;
@@ -62,7 +64,7 @@ button {
   justify-content: center;
   display: block;
   color: #fff;
-  background-color: #573b8a !important;
+  background-color: #ff5e62 !important;
   font-size: 1em;
   font-weight: bold;
   margin-top: 20px;
@@ -90,14 +92,3 @@ button:hover {
   transform: scale(.6);
 }
 
-#chk:checked ~ .login {
-  transform: translateY(-500px);
-}
-
-#chk:checked ~ .login label {
-  transform: scale(1);
-}
-
-#chk:checked ~ .signup label {
-  transform: scale(.6);
-}
