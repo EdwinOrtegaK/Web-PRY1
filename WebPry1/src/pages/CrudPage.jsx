@@ -125,7 +125,6 @@ const CrudPage = () => {
     ) {
       try {
         await deletePost(id);
-        // Actualizar la lista de publicaciones para reflejar la eliminación
         setPosts(posts.filter((post) => post.id !== id));
       } catch (error) {
         console.error(error);
@@ -340,16 +339,16 @@ const CrudPage = () => {
           {posts.map((post) => (
             <div key={post.id} className="post-item">
               <h3>{post.title}</h3>
-              <p>{post.content}</p>
-              <p>{post.pokemon_name}</p>
-              <p>{post.tipo_pokemon}</p>
-              <p>{post.grupo}</p>
-              <p>{post.cualidad}</p>
-              <p>{post.region}</p>
-              <p>{post.descripcion}</p>
+              <p>Contenido: {post.content}</p>
+              <p>Nombre:{post.pokemon_name}</p>
+              <p>Tipo: {post.tipo_pokemon}</p>
+              <p>Grupo: {post.grupo}</p>
+              <p>Cualidad: {post.cualidad}</p>
+              <p>Región: {post.region}</p>
+              <p>Descripción: {post.descripcion}</p>
               <button
                 onClick={() => handleDeleteClick(post.id)}
-                className="btn btn-danger"
+                className="btn btn-primary"
               >
                 Eliminar
               </button>
