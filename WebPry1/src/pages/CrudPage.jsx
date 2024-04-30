@@ -11,8 +11,8 @@ const CrudPage = () => {
   const [newPost, setNewPost] = useState({
     title: "",
     content: "",
-    pokemon_name: "",
-    tipo_pokemon: "",
+    pokemonName: "",
+    tipoPokemon: "",
     grupo: "",
     cualidad: "",
     region: "",
@@ -22,8 +22,8 @@ const CrudPage = () => {
     id: "",
     title: "",
     content: "",
-    pokemon_name: "",
-    tipo_pokemon: "",
+    pokemonName: "",
+    tipoPokemon: "",
     grupo: "",
     cualidad: "",
     region: "",
@@ -47,6 +47,7 @@ const CrudPage = () => {
     const fetchPosts = async () => {
       try {
         const fetchedPosts = await getPosts();
+        console.log(fetchedPosts);
         setPosts(fetchedPosts);
         setLoading(false);
       } catch (error) {
@@ -60,40 +61,75 @@ const CrudPage = () => {
     fetchPosts();
   }, []);
 
-  const handleCreatePost = async (newPostData) => {
+  const handleCreatePost = async (event) => {
     event.preventDefault();
+    const newPostData = {
+      title: newPost.title,
+      content: newPost.content,
+      pokemonName: newPost.pokemonName,
+      tipoPokemon: newPost.tipoPokemon,
+      grupo: newPost.grupo,
+      cualidad: newPost.cualidad,
+      region: newPost.region,
+      descripcion: newPost.descripcion,
+    };
+  
     try {
-      const createdData = await createPost(newPost);
+      const createdData = await createPost(newPostData);
       setPosts([...posts, createdData]);
       setNewPost({
         title: "",
         content: "",
-        pokemon_name: "",
-        tipo_pokemon: "",
+        pokemonName: "",
+        tipoPokemon: "",
         grupo: "",
         cualidad: "",
         region: "",
         descripcion: "",
       });
+      alert("Publicación creada con éxito.");
     } catch (error) {
       console.error("Error al crear la publicación:", error);
+      alert("Error al crear la publicación: " + error.message);
     }
   };
+  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setNewPost({ ...newPost, [name]: value });
   };
 
-  const handleUpdatePost = async (id, updatedPostData) => {
+  const handleUpdatePost = async (event) => {
     event.preventDefault();
+    const updatedPostData = {
+      title: updateInfo.title,
+      content: updateInfo.content,
+      pokemonName: updateInfo.pokemonName,
+      tipoPokemon: updateInfo.tipoPokemon,
+      grupo: updateInfo.grupo,
+      cualidad: updateInfo.cualidad,
+      region: updateInfo.region,
+      descripcion: updateInfo.descripcion,
+    };
     try {
-      const updatedData = await updatePost(updateInfo.id, updateInfo);
-      setPosts(
-        posts.map((post) => (post.id === updatedData.id ? updatedData : post))
-      );
+      const updatedData = await updatePost(updateInfo.id, updatedPostData);
+      setPosts(posts.map((post) => (post.id === updateInfo.id ? updatedData : post)));
+      setUpdateInfo({
+        id: "",
+        title: "",
+        content: "",
+        pokemonName: "",
+        tipoPokemon: "",
+        grupo: "",
+        cualidad: "",
+        region: "",
+        descripcion: "",
+      });
+      alert("Publicación actualizada con éxito.");
     } catch (e) {
-      console.error("Error al actualizar la publicación:", e);
+      console.error("Error al actualizar la publicación:", error);
+      alert("Error al actualizar la publicación: " + error.message);
     }
   };
 
@@ -109,10 +145,13 @@ const CrudPage = () => {
       return;
     }
     try {
-      await deletePost(idToDelete);
-      setPosts(posts.filter((post) => post.id !== idToDelete));
+      await deletePost(deleteId);
+      setPosts(posts.filter((post) => post.id !== deleteId));
+      setDeleteId("");
+      alert("Publicación eliminada con éxito.");
     } catch (error) {
-        console.error('Error al eliminar la publicación:', error);
+      console.error("Error al eliminar la publicación:", error);
+      alert(`Error al eliminar la publicación: ${error.message}`);
     } finally {
       setDeleteId("");
     }
@@ -126,6 +165,7 @@ const CrudPage = () => {
       try {
         await deletePost(id);
         setPosts(posts.filter((post) => post.id !== id));
+        alert("Publicación eliminada con éxito.");
       } catch (error) {
         console.error(error);
       }
@@ -162,18 +202,18 @@ const CrudPage = () => {
           <input
             className="form-control"
             type="text"
-            name="pokemon_name"
+            name="pokemonName"
             placeholder="Nombre"
-            value={newPost.pokemon_name}
+            value={newPost.pokemonName}
             onChange={handleInputChange}
             required
           />
           <input
             className="form-control"
             type="text"
-            name="tipo_pokemon"
+            name="tipoPokemon"
             placeholder="Tipo"
-            value={newPost.tipo_pokemon}
+            value={newPost.tipoPokemon}
             onChange={handleInputChange}
             required
           />
@@ -254,18 +294,18 @@ const CrudPage = () => {
           <input
             className="form-control"
             type="text"
-            name="pokemon_name"
+            name="pokemonName"
             placeholder="Nombre"
-            value={updateInfo.pokemon_name}
+            value={updateInfo.pokemonName}
             onChange={handleUpdateChange}
             required
           />
           <input
             className="form-control"
             type="text"
-            name="tipo_pokemon"
+            name="tipoPokemon"
             placeholder="Tipo"
-            value={updateInfo.tipo_pokemon}
+            value={updateInfo.tipoPokemon}
             onChange={handleUpdateChange}
             required
           />
@@ -307,7 +347,7 @@ const CrudPage = () => {
           />
           <div className="form-button mt-3">
             <button id="submit" type="submit" className="btn btn-primary">
-              Crear Publicación
+              Actualizar Publicación
             </button>
           </div>
         </form>
@@ -340,18 +380,12 @@ const CrudPage = () => {
             <div key={post.id} className="post-item">
               <h3>{post.title}</h3>
               <p>Contenido: {post.content}</p>
-              <p>Nombre:{post.pokemon_name}</p>
+              <p>Nombre: {post.pokemon_name}</p>
               <p>Tipo: {post.tipo_pokemon}</p>
               <p>Grupo: {post.grupo}</p>
               <p>Cualidad: {post.cualidad}</p>
               <p>Región: {post.region}</p>
               <p>Descripción: {post.descripcion}</p>
-              <button
-                onClick={() => handleDeleteClick(post.id)}
-                className="btn btn-primary"
-              >
-                Eliminar
-              </button>
             </div>
           ))}
         </div>
