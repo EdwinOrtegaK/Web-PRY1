@@ -54,10 +54,13 @@ export const deletePost = async (id) => {
     method: "DELETE",
   });
   if (!response.ok) {
-    const errorText = await response.text(); // o response.json() si la respuesta es JSON
+    const errorText = await response.text();
     throw new Error(
       `HTTP error! status: ${response.status}, body: ${errorText}`
     );
+  }
+  if (response.status === 204) {
+    return;
   }
   return response.json();
 };
