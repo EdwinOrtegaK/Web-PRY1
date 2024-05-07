@@ -15,7 +15,7 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route
-            path="/crud"
+            path="/admin/crud"
             element={
               <ProtectedRoute>
                 <CrudPage />
