@@ -1,28 +1,39 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../autenticacion/AuthContext'
+import { useAuth } from '../autenticacion/AuthContext'
 import '../App.css';
 
 const Login = () => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { setAuthData } = useContext(AuthContext);
-  const history = useNavigate();
-  const [isChecked, setIsChecked] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    setError('');
     try {
-      // Suponiendo que tienes una función para autenticar al usuario
-      const isAuthenticated = await authenticateUser(username, password);
-      if (isAuthenticated) {
-        setAuthData({ username });
-        navigate('/crud');
+      const response = await fetch('https://api.tiburoncin.lat/22305/login', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'username': username,
+          'password': password
+        }
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        login({ username });
+        navigate('/admin/crud');
       } else {
-        alert('Credenciales incorrectas');
+        alert(data.message || 'Credenciales incorrectas');
       }
     } catch (error) {
       console.error('Error durante el inicio de sesión:', error);
+      alert('Error al conectar con el servidor');
     }
   };
 
