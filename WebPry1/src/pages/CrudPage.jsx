@@ -157,21 +157,6 @@ const CrudPage = () => {
     }
   };
 
-  // Función para eliminar una publicación directamente desde la lista
-  const handleDeleteClick = async (id) => {
-    if (
-      window.confirm("¿Estás seguro de que deseas eliminar esta publicación?")
-    ) {
-      try {
-        await deletePost(id);
-        setPosts(posts.filter((post) => post.id !== id));
-        alert("Publicación eliminada con éxito.");
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
-
   if (loading) return <div className="blog-loader">Cargando...</div>;
   if (error) return <div className="error-message">Error: {error}</div>;
 
