@@ -8,24 +8,6 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    /*
-    if (token) {
-      try {
-        const decoded = jwtDecode(token);
-        if (decoded && decoded.username) {
-          setUser({ username: decoded.username });
-        } else {
-          console.log('Token no válido o expirado');
-          localStorage.removeItem('token');
-          localStorage.setItem('isAuth', false)
-        }
-      } catch (e) {
-        console.log('Error decoding token:', e);
-        localStorage.removeItem('token');
-        localStorage.setItem('isAuth', false)
-      }
-    }
-    */
   }, []);
 
   const login = (userCredentials, token) => {
