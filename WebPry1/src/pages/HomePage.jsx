@@ -58,10 +58,17 @@ const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const token = localStorage.getItem('token');
 
   const getPosts = async () => {
     try {
-      const apiResponse = await fetch("https://api.tiburoncin.lat/22305/posts");
+      const apiResponse = await fetch("https://api.tiburoncin.lat/22305/posts", {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      localStorage.setItem('isAuth', true)
 
       if (!apiResponse.ok) {
         throw new Error(`HTTP error! status: ${apiResponse.status}`); // Lanza un error si la respuesta no es exitosa
