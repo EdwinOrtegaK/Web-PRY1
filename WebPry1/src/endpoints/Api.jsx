@@ -1,4 +1,5 @@
 const API_URL = "https://api.tiburoncin.lat/22305/posts";
+const token = localStorage.getItem('token');
 
 // Obtener todas las publicaciones
 export const getPosts = async () => {
@@ -18,10 +19,14 @@ export const createPost = async (postData) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
     },
     body: JSON.stringify(postData),
   });
+  console.log(response);
   if (!response.ok) {
+    localStorage.setItem('isAuth', false)
+    localStorage.removeItem('token')
     const errorText = await response.text(); // o response.json() si la respuesta es JSON
     throw new Error(
       `HTTP error! status: ${response.status}, body: ${errorText}`
@@ -36,10 +41,13 @@ export const updatePost = async (id, postData) => {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
     },
     body: JSON.stringify(postData),
   });
   if (!response.ok) {
+    localStorage.setItem('isAuth', false)
+    localStorage.removeItem('token')
     const errorText = await response.text(); // o response.json() si la respuesta es JSON
     throw new Error(
       `HTTP error! status: ${response.status}, body: ${errorText}`
@@ -52,8 +60,13 @@ export const updatePost = async (id, postData) => {
 export const deletePost = async (id) => {
   const response = await fetch(`${API_URL}/${id}`, {
     method: "DELETE",
+    headers: {
+      "Authorization": `Bearer ${token}`
+    }
   });
   if (!response.ok) {
+    localStorage.setItem('isAuth', false)
+    localStorage.removeItem('token')
     const errorText = await response.text();
     throw new Error(
       `HTTP error! status: ${response.status}, body: ${errorText}`
