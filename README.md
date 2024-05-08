@@ -30,12 +30,15 @@ Clona este repositorio y ejecuta los siguientes comandos:
 git clone [url-del-repositorio]
 cd /Web-PRY1/WebPry1
 npm install
+```
 
 ## Uso
 
 Para ejecutar el servidor, utiliza el siguiente comando:
 
+```bash
 npm start
+```
 
 Este comando arrancará el servidor en http://localhost:22305/.
 
