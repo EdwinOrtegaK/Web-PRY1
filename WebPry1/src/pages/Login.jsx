@@ -9,6 +9,13 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [shouldReload, setShouldReload] = useState(false);
+
+  React.useEffect(() => {
+    if (shouldReload && window.location.pathname === '/admin/crud') {
+      window.location.reload();
+    }
+  }, [shouldReload]);
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -26,12 +33,18 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        login({ username });
+        localStorage.setItem('isAuth', true)
+        login({ username }, data.token);
         navigate('/admin/crud');
+        setShouldReload(true);
       } else {
+        localStorage.setItem('isAuth', false)
+        localStorage.removeItem('token')
         alert(data.message || 'Credenciales incorrectas');
       }
     } catch (error) {
+      localStorage.setItem('isAuth', false)
+      localStorage.removeItem('token')
       console.error('Error durante el inicio de sesión:', error);
       alert('Error al conectar con el servidor');
     }
