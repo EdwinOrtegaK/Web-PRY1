@@ -371,6 +371,7 @@ const CrudPage = () => {
               <p>Cualidad: {post.cualidad}</p>
               <p>Región: {post.region}</p>
               <p>Descripción: {post.descripcion}</p>
+              <p>Id: {post.id}</p>
             </div>
           ))}
         </div>
