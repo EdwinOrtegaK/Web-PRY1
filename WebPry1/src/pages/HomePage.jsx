@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import PropTypes from "prop-types";
 import "../index.css";
 
@@ -9,6 +10,22 @@ const Header = () => {
 
 const Footer = () => {
   return <footer className="blog-footer">Copyright 2024 UVG - Edwin Ortega Kou</footer>;
+};
+
+const LoginPageButton = () => {
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate('/admin');
+  };
+
+  return (
+    <div className="login-button-container">
+      <button className="login-button" onClick={handleLoginClick}>
+        Login
+      </button>
+    </div>
+  );
 };
 
 const Post = ({
@@ -168,6 +185,7 @@ const HomePage = () => {
   return (
     <>
       <Header />
+      <LoginPageButton />
       <main className="blog-main">
         <Posts />
       </main>
