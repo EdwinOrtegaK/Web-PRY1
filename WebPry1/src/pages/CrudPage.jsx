@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getPosts, createPost, updatePost, deletePost } from "../endpoints/Api";
+import { useApi } from "../endpoints/Api";
 import "../index.css";
 import "./CrudPage.css";
 
@@ -29,6 +29,8 @@ const CrudPage = () => {
     region: "",
     descripcion: "",
   });
+
+  const { getPosts, createPost, updatePost, deletePost } = useApi();
 
   useEffect(() => {
     const loadPosts = async () => {
@@ -92,6 +94,7 @@ const CrudPage = () => {
       console.error("Error al crear la publicación:", error);
       alert("Error al crear la publicación: " + error.message);
     }
+    window.location.reload()
   };
   
 
@@ -128,9 +131,10 @@ const CrudPage = () => {
       });
       alert("Publicación actualizada con éxito.");
     } catch (e) {
-      console.error("Error al actualizar la publicación:", error);
-      alert("Error al actualizar la publicación: " + error.message);
+      console.error("Error al actualizar la publicación:", e);
+      alert("Error al actualizar la publicación: " + e.message);
     }
+    window.location.reload()
   };
 
   const handleUpdateChange = (event) => {
@@ -155,6 +159,7 @@ const CrudPage = () => {
     } finally {
       setDeleteId("");
     }
+    window.location.reload()
   };
 
   if (loading) return <div className="blog-loader">Cargando...</div>;
