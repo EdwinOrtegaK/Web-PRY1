@@ -36,6 +36,7 @@ const Login = () => {
         localStorage.setItem('isAuth', true)
         login({ username }, data.token);
         navigate('/admin/crud');
+        window.location.reload();
         setShouldReload(true);
       } else {
         localStorage.setItem('isAuth', false)
